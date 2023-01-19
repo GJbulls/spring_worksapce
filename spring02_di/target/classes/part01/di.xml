@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!-- MessageBeanKorea mb = new MessageBeanKorea()
+				==같은 의미(객체생성)==
+	<bean id="mb" class="part01.MessageBeanKorea"/>
+			Spring Container로 위임함 
+			어떤작업을 다른쪽으로 위힘하는것을 ioc라고함.
+ -->
+<!-- <bean id="mb" class="part01.MessageBeanKorea"/> -->
+<bean id="mb" class="part01.MessageBeanEnglish"/>
+</beans>
+
