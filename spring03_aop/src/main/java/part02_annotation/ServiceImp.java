@@ -1,4 +1,4 @@
-package part01_xml;
+package part02_annotation;
 
 import java.util.Random;
 
