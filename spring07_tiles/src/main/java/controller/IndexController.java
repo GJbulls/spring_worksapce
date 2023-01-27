@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController {
-		
-		@RequestMapping("/index.do")
-		public String execute() {
-			return "defaultLayout";
-		}
+
+	@RequestMapping("/index.do")
+	public String execute() {
+		return "index";
+	}
 }

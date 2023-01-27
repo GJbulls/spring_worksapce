@@ -18,7 +18,26 @@
 	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
 	<put-attribute name="body" value=""/>
 	</definition>
-
+	
+	<!-- 인덱스 컨드롤에 있는 리던값"index"가 디피니션 name값이다. 
+	index
+	-->
+	<definition name="index" extends="defaultLayout">
+		<put-attribute name="title" value="Spring Tiles Example"/> <!-- 브라우져 타이틀 -->
+		<put-attribute name="body" value="/WEB-INF/views/body.jsp"/>
+	</definition>
+	
+	<!-- menu1 -->
+	<definition name="menu1" extends="defaultLayout">
+		<put-attribute name="title" value="Spring menu1 Example"/> <!-- 브라우져 타이틀 -->
+		<put-attribute name="body" value="/WEB-INF/views/menu1.jsp"/>
+	</definition>
+	
+	<!-- menu2 -->
+	<definition name="menu2" extends="defaultLayout">
+		<put-attribute name="title" value="Spring menu2 Example"/> <!-- 브라우져 타이틀 -->
+		<put-attribute name="body" value="/WEB-INF/views/menu2.jsp"/>
+	</definition>
 </tiles-definitions>
 
 

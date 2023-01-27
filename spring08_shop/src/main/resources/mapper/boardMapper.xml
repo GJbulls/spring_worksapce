@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+<!-- MemDao interface에서 count 호출하지만 dao에서는 구현하지 않고, mapper에있는 count를 호출한다.  -->
+	<select id="count" resultType="int">
+		SELECT count(*) FROM board
+	</select>
+	
+	<select id="list" parameterType="board.dto.PageDTO" resultType="board.dto.BoardDTO">
+		SELECT * FROM board
+	</select>
+</mapper>

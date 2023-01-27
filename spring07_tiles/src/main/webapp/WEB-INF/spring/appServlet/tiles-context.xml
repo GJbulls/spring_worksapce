@@ -5,6 +5,9 @@
 
 	<!-- controller -->
 <bean class="controller.IndexController"/>
+<bean class="controller.MenuOneController"/>
+<bean class="controller.MenuTwoController"/>
+<bean class="controller.DetailController"/>
 
 	<!-- tiles -->
 <bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
@@ -18,6 +21,16 @@
 	<!-- view -->
 	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+		<property name="order" value="1"/>
+	</bean>
+	
+	
+	<!-- InternalResourceViewResolver은 여러개의 리저브가 정의 되어있으면 제일 마지막에 우선순위를 준다. -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+		<property name="order" value="2"/>
+	
 	</bean>
 	
 </beans>
