@@ -30,6 +30,8 @@ public class FileUpload {
 			return random;
 	}// end saveCopyFile()
 
+	
+	//서버의 위치값을 받아올수있다.
 	public static String urlPath(HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("/");
 		System.out.println("root" + root);

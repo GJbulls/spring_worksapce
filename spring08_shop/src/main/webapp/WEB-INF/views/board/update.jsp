@@ -11,6 +11,22 @@ $(document).ready(function(){
 	    $('[name=content]').val($('[name=content]').val().replace(/\n/gi, '</br>'));
 	    $('#frm').attr('action', 'update.do').submit();
 	});
+	
+	$('#cancle').click(function() {
+	
+	    $('#writer').val('${dato.writer}');
+	    $('#subject').val('${dto.subject}');
+	    $('#content').val('${dto.content}');
+	});
+	
+	$('#back').click(function(){
+		/* history.back(); */
+		history.go(-1);
+	});
+	
+	
+	
+	
 });
 </script>
 
@@ -52,7 +68,7 @@ $(document).ready(function(){
 		<input type="hidden" name="num" value="${dto.num}" /> <input
 			type="hidden" name="currentPage" value="${currentPage}" /> <input
 			type="button" id="update" value="수정" /> <input type="button"
-			id="cancel" value="취소" />
+			id="cancle" value="취소" />
 			<input type="button" id="back" value="뒤로" />
 		</div>	
 	</form>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <!-- dao에서 호출 -->
+   <mapper namespace="members">
+   	<!-- 회원가입 -->
+   <insert id="insertMember" parameterType="members.dto.MembersDTO">
+   	<![CDATA[
+   		INSERT INTO members(memberEmail, memberPass, memberName, memberPhone ,memberType)
+   		VALUES(#{memberEmail},#{memberPass},#{memberName},#{memberPhone},#{memberType})
+   	]]>
+   </insert>
+   
+   <select id="selectByEmail" parameterType="string" resultType="members.dto.MembersDTO">
+   	SELECT * FROM members
+   	WHERE memberEmail = #{memberEmail}
+   </select>
+   
+   
+   </mapper>
