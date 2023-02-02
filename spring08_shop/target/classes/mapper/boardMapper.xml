@@ -24,8 +24,8 @@
   
   <!--  ref == 0 제목글  ref ==1 답변글 -->
     <insert id = "save" parameterType="board.dto.BoardDTO">
-       INSERT INTO board(num, writer, subject, reg_date, readcount, ref, re_step, re_level, content, ip, upload, memberEmail)
-       VALUES(board_num_seq.nextval,#{writer}, #{subject}, sysdate, 0,
+       INSERT INTO board(num,subject, reg_date, readcount, ref, re_step, re_level, content, ip, upload, memberEmail)
+       VALUES(board_num_seq.nextval,#{subject}, sysdate, 0,
        <choose>
           <when test = "ref==0">
              board_num_seq.nextval,
@@ -41,13 +41,28 @@
     
     <update id="readCount" parameterType="int">
          UPDATE board
-       SET readCount = readCount + 1
-       WHERE num=#{num}
+         SET readCount = readCount + 1
+         WHERE num=#{num}
     </update>
     
-    <select id="content" parameterType="int" resultType="board.dto.BoardDTO">
-       SELECT * FROM board
-       WHERE num=#{num}
+    
+    	
+		<resultMap type="board.dto.BoardDTO" id="contentSelect" autoMapping="true">
+			<association property="membersDTO" javaType="members.dto.MembersDTO"> <!-- jdbc타입은 오라클은 의미하다. -->
+				<result column="memberName" property="memberName"/>
+			</association>
+			
+		</resultMap>    
+    
+    <select id="content" parameterType="int" resultMap="contentSelect">
+		SELECT b.*, m.memberName
+		FROM board b, members m
+		WHERE b.memberEmail = m.memberEmail
+		 AND m.memberEmail=(SELECT memberEmail FROM board
+							 WHERE num=#{num})
+		 ANd num=#{num}
+       <!-- member table에서 write가져오기 / 비회원도 write  -->
+       
     </select>
     
     <update id="reStepCount" parameterType="board.dto.BoardDTO">

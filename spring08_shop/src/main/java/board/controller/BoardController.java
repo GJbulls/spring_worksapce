@@ -3,6 +3,7 @@ package board.controller;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +17,7 @@ import board.dto.BoardDTO;
 import board.dto.PageDTO;
 import board.service.BoardService;
 import common.file.FileUpload;
+import members.dto.AuthInfo;
 
 
 
@@ -56,9 +58,12 @@ public class BoardController {
    }
 
    @RequestMapping(value="/board/write.do", method=RequestMethod.POST)
-   public String writeProExecute(BoardDTO dto, PageDTO pv, HttpServletRequest req, RedirectAttributes ratt) {
+   public String writeProExecute(BoardDTO dto, PageDTO pv, HttpServletRequest req ,HttpSession session,RedirectAttributes ratt ) {
       //첨부파일 작업
       MultipartFile file = dto.getFilename();
+      
+//      System.out.println(dto.getMembersDTO().getMemberName()); //null pointer Exception 발생 =>write.jsp=>write 를 membeName로 고치면 에러발생
+      														    //dto.getMembersDTO()값이 null값이다.
 //      System.out.println("file : " + file.getOriginalFilename());
       
       //(FileUpload.java) 
@@ -70,6 +75,9 @@ public class BoardController {
       }
       
       dto.setIp(req.getRemoteAddr()); //클라이언트에 ip주소를 저장해줌
+      
+//      AuthInfo authinfo = (AuthInfo)session.getAttribute("authInfo");
+//      dto.setMemberEmail(authinfo.getMemberEmail());
       
       boardService.insertProcess(dto);
       

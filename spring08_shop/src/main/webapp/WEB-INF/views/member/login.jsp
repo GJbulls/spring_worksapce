@@ -42,7 +42,7 @@
 				</div>   
 				
 				<div class="form-check mt-3">
-				<label class="form-check-label" for="rememberEmail">Email 기억하기:</label>
+				<label class="form-check-label" for="rememberEmail">Email 기억하기</label>
 					<input type="checkbox" class="form-check-input" name="rememberEmail" placeholder="rememberEmail" id="rememberEmail" > 
 					
 				</div> 

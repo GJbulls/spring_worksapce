@@ -32,7 +32,7 @@
               </c:if>                          
               <a href = "${path}"> ${dto.subject}</a>
             </td>
-            <td class="text-center">${dto.writer}</td>
+            <td class="text-center">${dto.membersDTO.memberName}</td>
             <td class="text-center">${dto.readcount}</td>
          </tr>
       </c:forEach>

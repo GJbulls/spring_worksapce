@@ -1,5 +1,6 @@
 package members.service;
-
+import board.dao.BoardDAO;
+//dao를 호출한다.
 import common.exception.WrongEmailPasswordException;
 import members.dao.MembersDAO;
 import members.dto.AuthInfo;
@@ -42,19 +43,29 @@ public class MembersServiceImp implements MembersService {
 
 	@Override
 	public MembersDTO updateMemberProcess(String memberEmail) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return membersDao.selectByEmail(memberEmail); //email에대한 데이터값을 가져옴 dao로부터
 	}
 
 	@Override
-	public void updateMemberProcess(MembersDTO dto) {
-		// TODO Auto-generated method stub
-		
+	public AuthInfo updateMemberProcess(MembersDTO dto) { //dao에서 메소드 불러옴
+		membersDao.updateMember(dto);
+		MembersDTO member = membersDao.selectByEmail(dto.getMemberEmail());
+		return new AuthInfo(member.getMemberEmail(), member.getMemberName(), member.getMemberPass());
 	}
 
 	@Override
 	public void updatePassProcess(String memberEmail, ChangePwdCommand changePwd) {
-		// TODO Auto-generated method stub
+		MembersDTO member = membersDao.selectByEmail(memberEmail);  //email정보를  MembersDTO member여기서 받는다.
+		if(member == null)
+			throw new WrongEmailPasswordException();
+		
+		member.changePassword(changePwd.getCurrentPassword(),changePwd.getNewPassword());
+		membersDao.updateByPass(member);
+
 		
 	}
 }
+
+
+

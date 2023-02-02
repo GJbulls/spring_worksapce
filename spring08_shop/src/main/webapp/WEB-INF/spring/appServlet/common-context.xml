@@ -3,10 +3,25 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
+	<!-- interceptor -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*/*.do"/>
+			<mvc:exclude-mapping path="/home.do"/> <!--인증을 하고 볼수있는부분 인터셉터 영향 받으면 안됌 -->
+			<mvc:exclude-mapping path="/member/login.do"/> <!--인증을 하고 볼수있는부분 인터셉터 영향 받으면 안됌 -->
+			<mvc:exclude-mapping path="/member/signup.do"/> <!--인증을 하고 볼수있는부분 인터셉터 영향 받으면 안됌 -->
+			<mvc:exclude-mapping path="/board/list.do"/> <!--인증을 하고 볼수있는부분 인터셉터 영향 받으면 안됌 -->
+			<mvc:exclude-mapping path="/board/view.do"/> <!--인증을 하고 볼수있는부분 인터셉터 영향 받으면 안됌 -->
+			<bean class="common.interceptor.AuthCheckInterceptor"/> <!-- 인증안해도 볼수있는부분 -->
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	
 	 <!-- [1] DataSource 빈 선언 -->
    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

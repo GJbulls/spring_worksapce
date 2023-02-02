@@ -1,5 +1,6 @@
 package members.dao;
 //서비스로 내보냄
+//mapper에서 내보내서 dao에서 받음1
 import org.apache.ibatis.session.SqlSession;
 
 import members.dto.MembersDTO;
@@ -27,13 +28,12 @@ public class MembersDaoImp implements MembersDAO{
 
 	@Override
 	public void updateMember(MembersDTO dto) {
-		// TODO Auto-generated method stub
-		
+		sqlSession.update("members.updateMember",dto); //서비스에서 메소드 호출시킨다.
 	}
 
 	@Override
-	public void updateByEmail(MembersDTO dto) {
-		// TODO Auto-generated method stub
+	public void updateByPass(MembersDTO dto) {
+		sqlSession.update("members.updateByPass",dto);
 		
 	}
 }

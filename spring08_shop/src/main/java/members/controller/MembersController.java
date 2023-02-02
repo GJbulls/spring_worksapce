@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import common.exception.WrongEmailPasswordException;
 import members.dto.AuthInfo;
+import members.dto.ChangePwdCommand;
 import members.dto.MembersDTO;
 import members.service.MembersService;
 
@@ -42,8 +43,8 @@ public class MembersController {
 	
 	//회원가입처리
 	@RequestMapping(value="/member/signup.do", method=RequestMethod.POST)
-	public String addMember(MembersDTO memberDTO, HttpSession session) {
-		AuthInfo authInfo = membersService.addMemberProcess(memberDTO);
+	public String addMember(MembersDTO membersDTO, HttpSession session) {
+		AuthInfo authInfo = membersService.addMemberProcess(membersDTO);
 		session.setAttribute("authInfo", authInfo);
 		return "redirect:/home.do";
 	}
@@ -76,7 +77,7 @@ public class MembersController {
 			rememberCookie.setPath("/");
 		
 			if(membersDTO.isRememberEmail()) {
-				rememberCookie.setMaxAge(60 * 60 * 24 * 30); //60초 60분 24시간 30일 =1개월동안 저장시킨다.
+				rememberCookie.setMaxAge(60 * 60 * 24 * 30); //60초* 60분* 24시간* 30일 =1개월동안 저장시킨다.
 			}else {
 				rememberCookie.setMaxAge(0);
 			}
@@ -100,8 +101,41 @@ public class MembersController {
 		
 		return null;
 	}
+	//회원정보 수정 폼
+	@RequestMapping(value="member/editmember.do", method=RequestMethod.GET)
+	public ModelAndView updateMember(ModelAndView mav, HttpSession session) {
+		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+		mav.addObject("membersDTO", membersService.updateMemberProcess(authInfo.getMemberEmail()));
+		mav.setViewName("member/editmember");
+		return mav;
+	}
+	
+	//회원정보 수정 처리
+	@RequestMapping(value="/member/editmember.do", method=RequestMethod.POST)
+	public String updateMember(MembersDTO membersDTO, HttpSession session) {
+		AuthInfo authInfo = membersService.updateMemberProcess(membersDTO);
+		session.setAttribute("authInfo", authInfo);
+		return "redirect:/home.do";
+	}
 	
 	
+	//비밀번호 수정 폼
+	@RequestMapping(value="/member/changepass.do", method=RequestMethod.GET)
+	public String changePassword() {
+		return "member/changepass";	
+	}
+	
+	
+	@RequestMapping(value="/member/changepass.do", method=RequestMethod.POST)
+	public String changePassword(ChangePwdCommand changePass, HttpSession session) {
+		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+		try {
+			membersService.updatePassProcess(authInfo.getMemberEmail(),changePass);
+			return "redirect:/home.do";
+		}catch (WrongEmailPasswordException e) {
+			return "member/changepass";	
+		}
+	}
 }//class end
 
 

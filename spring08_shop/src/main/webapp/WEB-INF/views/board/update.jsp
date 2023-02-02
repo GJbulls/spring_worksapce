@@ -14,7 +14,7 @@ $(document).ready(function(){
 	
 	$('#cancle').click(function() {
 	
-	    $('#writer').val('${dato.writer}');
+	    $('#memberName').val('${dto.membersDTO.memberName}');
 	    $('#subject').val('${dto.subject}');
 	    $('#content').val('${dto.content}');
 	});
@@ -36,8 +36,8 @@ $(document).ready(function(){
 		<table class="table table-bordered mt-1">
 			<tr>
 				<th>작성자</th>
-				<td colspan="3"><input type="text" name="writer" id="writer"
-					value="${dto.writer}"  readonly="readonly"/></td>				
+				<td colspan="3"><input type="text" name="memberName" id="memberName"
+					value="${dto.membersDTO.memberName}"  readonly="readonly"/></td>				
 			</tr>
 			
 			<tr>
