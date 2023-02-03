@@ -11,14 +11,23 @@
      SELECT count(*) FROM board
   </select>
   
+  <resultMap type="board.dto.BoardDTO" id="listSelect" autoMapping="true">
+  	<association property="membersDTO" javaType="members.dto.MembersDTO">
+  		<result column="memberName" property="memberName"/>
+  	</association>
+  </resultMap>
+  
+  
   <!-- 현재 테이블에 저장되어있는 전체 데이터를 리턴한다. -->
-  <select id="list" parameterType="board.dto.PageDTO" resultType="board.dto.BoardDTO">
+  <select id="list" parameterType="board.dto.PageDTO" resultMap="listSelect">
      <![CDATA[
      SELECT b.*
 	 FROM(SELECT rownum AS rm , a.*
-	 FROM(SELECT * FROM board
-	 ORDER BY ref DESC, re_step ASC)a)b
-	 WHERE b.rm>=#{startRow} AND b.rm<=#{endRow}
+         FROM(SELECT b.*, m.memberName
+             FROM board b, members m
+         WHERE b.memberEmail=m.memberEmail(+)
+             ORDER BY ref DESC, re_step ASC)a)b
+         WHERE b.rm>=#{startRow} AND b.rm<=#{endRow}
   ]]>
   </select>
   
@@ -57,10 +66,8 @@
     <select id="content" parameterType="int" resultMap="contentSelect">
 		SELECT b.*, m.memberName
 		FROM board b, members m
-		WHERE b.memberEmail = m.memberEmail
-		 AND m.memberEmail=(SELECT memberEmail FROM board
-							 WHERE num=#{num})
-		 ANd num=#{num}
+		WHERE b.memberEmail = m.memberEmail(+)
+		AND num=#{num}
        <!-- member table에서 write가져오기 / 비회원도 write  -->
        
     </select>
