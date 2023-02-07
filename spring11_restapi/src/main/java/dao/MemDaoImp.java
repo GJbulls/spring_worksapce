@@ -25,6 +25,12 @@ public class MemDaoImp implements MemDAO {
 		return sqlSession.selectList("mem.all");
 	}
 
+	@Override
+	public MemDTO list(MemDTO dto) {
+		return sqlSession.selectOne("mem.search",dto);
+	}
+	
+	
 	@Override //MemDAO상속 받음 오버라이드 시켜줌
 	public void insertMethod(MemDTO dto) {
 		sqlSession.insert("mem.ins",dto);
@@ -59,5 +65,7 @@ public class MemDaoImp implements MemDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 	
 }

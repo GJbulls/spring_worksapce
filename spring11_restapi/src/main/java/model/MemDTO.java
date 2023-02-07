@@ -19,7 +19,10 @@ public class MemDTO {
 		this.loc = loc;
 	}
 
-
+	public MemDTO(int num, String name) {
+		this.num=num;
+		this.name=name;
+	}
 
 	public int getNum() {
 		return num;

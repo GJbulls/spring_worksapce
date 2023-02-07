@@ -8,6 +8,8 @@ public interface MemDAO {
 	
 	public List<MemDTO> list();
 	
+	public MemDTO list(MemDTO dto);
+	
 	public void insertMethod(MemDTO dto);
 	
 	public MemDTO updateMethod(int num);
